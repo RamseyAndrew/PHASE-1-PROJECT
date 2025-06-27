@@ -1782,23 +1782,6 @@
       "processor": "Snapdragon 8 Gen 3",
       "description": "Nubia Red Magic 9 Pro offers exceptional gaming performance with advanced cooling."
     },
-    {
-      "id": 100,
-      "name": "Nubia Red Magic 8 Pro+",
-      "brand": "Nubia",
-      "image": "https://fdn2.gsmarena.com/vv/pics/nubia/nubia-red-magic-8-pro-plus-1.jpg",
-      "price": 999,
-      "ram": "16GB",
-      "storage": "1TB",
-      "camera": "50MP Triple",
-      "battery": "5000mAh",
-      "screen": "6.8\" AMOLED",
-      "rating": 4.5,
-      "stock": 20,
-      "releaseYear": 2023,
-      "os": "Android 13",
-      "processor": "Snapdragon 8 Gen 2",
-      "description": "Nubia Red Magic 8 Pro+ features under-display camera and gaming-optimized design."
-    }
+   
   ]
 }
