@@ -296,8 +296,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+- GitHub: [@yourusername](https://github.com/RamseyAndrew)
 
 ## 🙏 Acknowledgments
 
@@ -305,14 +304,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **JSON Server** for the local API solution
 - **CSS Variables** for the theming system
 - **Modern JavaScript** for the interactive features
-
 ---
 
 ⭐ **Star this repository if you found it helpful!**
 
-🔗 **Live Demo**: [Add your live demo link here]
+🔗 **Live Demo**: [https://ramseyandrew.github.io/PHASE-1-PROJECT/]
+   **Remember to run the server first!**
 
-📧 **Contact**: your.email@example.com
+📧 **Contact**: anti.xe17@gmail.com
 
 ---
 
