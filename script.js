@@ -64,8 +64,7 @@ function createPhoneCard(phone) {
         <div class="phone-info">
             <h3 class="phone-name">${phone.name}</h3>
             <div class="phone-brand">${phone.brand}</div>
-            <div class="phone-rating">⭐ ${phone.rating}/5</div>
-            
+            <div class="phone-rating">⭐ ${phone.rating}/5</div>  
             <div class="phone-specs">
                 <span class="spec">📱 ${phone.screen}</span>
                 <span class="spec">💾 ${phone.storage}</span>
