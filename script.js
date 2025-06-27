@@ -1,6 +1,7 @@
 // Enhanced Phone Store Script - Local Database
 // This script handles fetching, displaying, searching, and viewing details for phones from a local JSON server.
 // It also manages dark mode and UI interactivity for a single-page application experience.
+// This version is for a review site (no stock or buying logic).
 
 let allPhones = []; // Store all phones globally for filtering and rendering
 
@@ -55,13 +56,7 @@ function createPhoneCard(phone) {
     const card = document.createElement('div');
     card.className = 'phone-card';
     
-    // Determine stock status and class for styling
-    const stockStatus = phone.stock > 10 ? 'In Stock' : 
-                       phone.stock > 0 ? 'Low Stock' : 'Out of Stock';
-    const stockClass = phone.stock > 10 ? 'in-stock' : 
-                      phone.stock > 0 ? 'low-stock' : 'out-of-stock';
-    
-    // Card HTML structure with phone summary
+    // Card HTML structure with phone summary (no stock info)
     card.innerHTML = `
         <div class="phone-image">
             <img src="${phone.image}" alt="${phone.name}" onerror="this.src='https://via.placeholder.com/300x400?text=${phone.name}'">
@@ -76,7 +71,6 @@ function createPhoneCard(phone) {
                 <span class="spec">💾 ${phone.storage}</span>
                 <span class="spec">📷 ${phone.camera}</span>
             </div>
-            <div class="phone-stock ${stockClass}">${stockStatus} (${phone.stock})</div>
         </div>
     `;
 
@@ -130,13 +124,7 @@ function renderPhones(phones) {
  */
 function showPhoneDetails(phone) {
     const details = document.getElementById('details');
-    // Determine stock status and class for styling
-    const stockStatus = phone.stock > 10 ? 'In Stock' : 
-                       phone.stock > 0 ? 'Low Stock' : 'Out of Stock';
-    const stockClass = phone.stock > 10 ? 'in-stock' : 
-                      phone.stock > 0 ? 'low-stock' : 'out-of-stock';
-    
-    // Modal HTML structure with all phone details
+    // Modal HTML structure with all phone details (no stock info)
     details.innerHTML = `
         <div class="details-modal">
             <div class="details-content">
@@ -152,7 +140,6 @@ function showPhoneDetails(phone) {
                 <div class="details-body">
                     <div class="price-section">
                         <div class="price">$${phone.price.toLocaleString()}</div>
-                        <div class="stock ${stockClass}">${stockStatus} (${phone.stock} available)</div>
                     </div>
                     <div class="specs-grid">
                         <div class="spec-item">
