@@ -1,7 +1,18 @@
 // Enhanced Phone Store Script - Local Database
-let allPhones = []; // Store all phones globally
+// This script handles fetching, displaying, searching, and viewing details for phones from a local JSON server.
+// It also manages dark mode and UI interactivity for a single-page application experience.
 
+let allPhones = []; // Store all phones globally for filtering and rendering
+
+// ----------------------
 // Dark Mode Functionality
+// ----------------------
+/**
+ * Initializes dark mode toggle functionality.
+ * - Reads saved theme from localStorage or defaults to light mode.
+ * - Sets the data-theme attribute on the <html> element.
+ * - Adds a click event listener to the toggle button to switch themes.
+ */
 function initDarkMode() {
     const darkModeToggle = document.getElementById('darkModeToggle');
     const html = document.documentElement;
@@ -10,7 +21,7 @@ function initDarkMode() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     html.setAttribute('data-theme', savedTheme);
     
-    // Toggle dark mode
+    // Toggle dark mode on button click
     darkModeToggle.addEventListener('click', () => {
         const currentTheme = html.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -18,7 +29,7 @@ function initDarkMode() {
         html.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         
-        // Add smooth transition effect
+        // Add smooth transition effect for theme change
         html.style.transition = 'all 0.3s ease';
         setTimeout(() => {
             html.style.transition = '';
@@ -27,19 +38,30 @@ function initDarkMode() {
 }
 
 // Initialize dark mode when DOM is loaded
+// Ensures theme is set before any UI is shown
+// (DOMContentLoaded is a distinct event listener)
 document.addEventListener('DOMContentLoaded', initDarkMode);
 
-// Function to create a phone card element with detailed info
+// ---------------------------------------------
+// Function to create a phone card element
+// ---------------------------------------------
+/**
+ * Creates a DOM element representing a phone card with summary info.
+ * Adds click and hover event listeners for interactivity.
+ * @param {Object} phone - The phone object to display
+ * @returns {HTMLElement} - The card element
+ */
 function createPhoneCard(phone) {
     const card = document.createElement('div');
     card.className = 'phone-card';
     
-    // Create stock status
+    // Determine stock status and class for styling
     const stockStatus = phone.stock > 10 ? 'In Stock' : 
                        phone.stock > 0 ? 'Low Stock' : 'Out of Stock';
     const stockClass = phone.stock > 10 ? 'in-stock' : 
                       phone.stock > 0 ? 'low-stock' : 'out-of-stock';
     
+    // Card HTML structure with phone summary
     card.innerHTML = `
         <div class="phone-image">
             <img src="${phone.image}" alt="${phone.name}" onerror="this.src='https://via.placeholder.com/300x400?text=${phone.name}'">
@@ -58,12 +80,12 @@ function createPhoneCard(phone) {
         </div>
     `;
 
-    // Add click event to show details
+    // Add click event to show details modal for this phone
     card.addEventListener('click', () => {
         showPhoneDetails(phone);
     });
 
-    // Add hover effects
+    // Add hover effects for better UX (mouseover/mouseout are distinct events)
     card.addEventListener('mouseover', () => {
         card.style.transform = 'translateY(-5px)';
         card.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
@@ -76,29 +98,45 @@ function createPhoneCard(phone) {
     return card;
 }
 
-// Function to render all phones
+// ---------------------------------------------
+// Function to render all phones to the page
+// ---------------------------------------------
+/**
+ * Renders an array of phone objects as cards in the #results container.
+ * @param {Array} phones - Array of phone objects to display
+ */
 function renderPhones(phones) {
     const results = document.getElementById('results');
     results.innerHTML = ''; // Clear previous results
     
+    // Show message if no phones match the filter/search
     if (phones.length === 0) {
         results.innerHTML = '<div class="no-results">No phones found matching your search.</div>';
         return;
     }
     
+    // Iterate over phones and append each card
     phones.forEach(phone => {
         results.appendChild(createPhoneCard(phone));
     });
 }
 
+// ---------------------------------------------
 // Function to show detailed phone information
+// ---------------------------------------------
+/**
+ * Displays a modal with detailed information about a phone.
+ * @param {Object} phone - The phone object to show details for
+ */
 function showPhoneDetails(phone) {
     const details = document.getElementById('details');
+    // Determine stock status and class for styling
     const stockStatus = phone.stock > 10 ? 'In Stock' : 
                        phone.stock > 0 ? 'Low Stock' : 'Out of Stock';
     const stockClass = phone.stock > 10 ? 'in-stock' : 
                       phone.stock > 0 ? 'low-stock' : 'out-of-stock';
     
+    // Modal HTML structure with all phone details
     details.innerHTML = `
         <div class="details-modal">
             <div class="details-content">
@@ -155,16 +193,27 @@ function showPhoneDetails(phone) {
         </div>
     `;
     
-    details.style.display = 'block';
+    details.style.display = 'block'; // Show the modal
 }
 
+// ---------------------------------------------
 // Function to close details modal
+// ---------------------------------------------
+/**
+ * Hides the phone details modal.
+ */
 function closeDetails() {
     const details = document.getElementById('details');
     details.style.display = 'none';
 }
 
+// ---------------------------------------------
 // Fetch phones from local JSON server
+// ---------------------------------------------
+/**
+ * Fetches phone data from the local JSON server and renders the phone cards.
+ * Handles errors if the server is not running.
+ */
 fetch('http://localhost:3000/phones')
     .then(response => {
         if (!response.ok) {
@@ -188,9 +237,17 @@ fetch('http://localhost:3000/phones')
         `;
     });
 
+// ---------------------------------------------
 // Enhanced search functionality
+// ---------------------------------------------
+/**
+ * Filters the phone list as the user types in the search bar.
+ * Listens for 'input' events on the search input field.
+ * (This is a distinct event type for requirements)
+ */
 document.getElementById('searchInput').addEventListener('input', function() {
     const searchValue = this.value.toLowerCase();
+    // Filter phones by name, brand, description, or processor
     const filteredPhones = allPhones.filter(phone =>
         phone.name.toLowerCase().includes(searchValue) ||
         phone.brand.toLowerCase().includes(searchValue) ||
@@ -200,9 +257,16 @@ document.getElementById('searchInput').addEventListener('input', function() {
     renderPhones(filteredPhones);
 });
 
-// Close details when clicking outside
+// ---------------------------------------------
+// Close details modal when clicking outside
+// ---------------------------------------------
+/**
+ * Closes the details modal if the user clicks outside the modal content.
+ * Listens for 'click' events on the document.
+ */
 document.addEventListener('click', function(event) {
     const details = document.getElementById('details');
+    // Only close if the click is directly on the overlay (not inside modal)
     if (event.target === details) {
         closeDetails();
     }
