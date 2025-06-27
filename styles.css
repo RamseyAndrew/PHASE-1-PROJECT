@@ -102,8 +102,7 @@ header {
     display: none;
 }
 
-[data-theme="dark"] .dark-mode-btn .moon {
-    display: none;
+
 }
 
 [data-theme="dark"] .dark-mode-btn .sun {
