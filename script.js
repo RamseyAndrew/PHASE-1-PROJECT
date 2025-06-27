@@ -56,7 +56,12 @@ function createPhoneCard(phone) {
     const card = document.createElement('div');
     card.className = 'phone-card';
     
-    // Card HTML structure with phone summary (no stock info)
+    // Initialize reviews array if it doesn't exist
+    if (!phone.reviews) {
+        phone.reviews = [];
+    }
+    
+    // Card HTML structure with phone summary and review section
     card.innerHTML = `
         <div class="phone-image">
             <img src="${phone.image}" alt="${phone.name}" onerror="this.src='https://via.placeholder.com/300x400?text=${phone.name}'">
@@ -71,11 +76,30 @@ function createPhoneCard(phone) {
                 <span class="spec">📷 ${phone.camera}</span>
             </div>
         </div>
+        <div class="review-section">
+            <div class="reviews-header">
+                <h4>Reviews (${phone.reviews.length})</h4>
+                <button class="add-review-btn" onclick="toggleReviewForm(${phone.id})">Add Review</button>
+            </div>
+            <div class="review-form" id="reviewForm-${phone.id}" style="display: none;">
+                <textarea placeholder="Write your review here..." id="reviewText-${phone.id}"></textarea>
+                <div class="review-form-controls">
+                    <button onclick="submitReview(${phone.id})">Submit Review</button>
+                    <button onclick="toggleReviewForm(${phone.id})" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+            <div class="reviews-list" id="reviewsList-${phone.id}">
+                ${renderReviews(phone.reviews)}
+            </div>
+        </div>
     `;
 
     // Add click event to show details modal for this phone
-    card.addEventListener('click', () => {
-        showPhoneDetails(phone);
+    card.addEventListener('click', (e) => {
+        // Don't trigger modal if clicking on review elements
+        if (!e.target.closest('.review-section')) {
+            showPhoneDetails(phone);
+        }
     });
 
     // Add hover effects for better UX (mouseover/mouseout are distinct events)
@@ -89,6 +113,139 @@ function createPhoneCard(phone) {
     });
 
     return card;
+}
+
+// ---------------------------------------------
+// Function to render reviews
+// ---------------------------------------------
+/**
+ * Renders the reviews list for a phone
+ * @param {Array} reviews - Array of review objects
+ * @returns {string} - HTML string of reviews
+ */
+function renderReviews(reviews) {
+    if (reviews.length === 0) {
+        return '<p class="no-reviews">No reviews yet. Be the first to review!</p>';
+    }
+    
+    return reviews.map(review => `
+        <div class="review-item">
+            <div class="review-header">
+                <span class="reviewer-name">${review.reviewerName || 'Anonymous'}</span>
+                <span class="review-date">${new Date(review.date).toLocaleDateString()}</span>
+            </div>
+            <div class="review-text">${review.text}</div>
+        </div>
+    `).join('');
+}
+
+// ---------------------------------------------
+// Function to toggle review form
+// ---------------------------------------------
+/**
+ * Shows or hides the review form for a specific phone
+ * @param {number} phoneId - The ID of the phone
+ */
+function toggleReviewForm(phoneId) {
+    const form = document.getElementById(`reviewForm-${phoneId}`);
+    const textarea = document.getElementById(`reviewText-${phoneId}`);
+    
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+        textarea.focus();
+    } else {
+        form.style.display = 'none';
+        textarea.value = '';
+    }
+}
+
+// ---------------------------------------------
+// Function to submit a review
+// ---------------------------------------------
+/**
+ * Submits a new review for a phone
+ * @param {number} phoneId - The ID of the phone
+ */
+function submitReview(phoneId) {
+    const textarea = document.getElementById(`reviewText-${phoneId}`);
+    const reviewText = textarea.value.trim();
+    
+    if (!reviewText) {
+        alert('Please write a review before submitting.');
+        return;
+    }
+    
+    // Find the phone in the global array
+    const phone = allPhones.find(p => p.id === phoneId);
+    if (!phone) return;
+    
+    // Initialize reviews array if it doesn't exist
+    if (!phone.reviews) {
+        phone.reviews = [];
+    }
+    
+    // Create new review object
+    const newReview = {
+        id: Date.now(), // Simple ID generation
+        text: reviewText,
+        reviewerName: 'Anonymous', // Could be enhanced with user system
+        date: new Date().toISOString()
+    };
+    
+    // Add review to phone
+    phone.reviews.push(newReview);
+    
+    // Update the reviews list display
+    const reviewsList = document.getElementById(`reviewsList-${phoneId}`);
+    reviewsList.innerHTML = renderReviews(phone.reviews);
+    
+    // Update the reviews count in header
+    const reviewsHeader = reviewsList.previousElementSibling.previousElementSibling;
+    const countElement = reviewsHeader.querySelector('h4');
+    countElement.textContent = `Reviews (${phone.reviews.length})`;
+    
+    // Hide the form and clear the textarea
+    toggleReviewForm(phoneId);
+    
+    // Save to localStorage for persistence (since we're not updating the server)
+    saveReviewsToLocalStorage();
+    
+    // Show success message
+    alert('Review submitted successfully!');
+}
+
+// ---------------------------------------------
+// Function to save reviews to localStorage
+// ---------------------------------------------
+/**
+ * Saves all phone reviews to localStorage for persistence
+ */
+function saveReviewsToLocalStorage() {
+    const reviewsData = {};
+    allPhones.forEach(phone => {
+        if (phone.reviews && phone.reviews.length > 0) {
+            reviewsData[phone.id] = phone.reviews;
+        }
+    });
+    localStorage.setItem('phoneReviews', JSON.stringify(reviewsData));
+}
+
+// ---------------------------------------------
+// Function to load reviews from localStorage
+// ---------------------------------------------
+/**
+ * Loads reviews from localStorage and applies them to phones
+ */
+function loadReviewsFromLocalStorage() {
+    const reviewsData = localStorage.getItem('phoneReviews');
+    if (reviewsData) {
+        const reviews = JSON.parse(reviewsData);
+        allPhones.forEach(phone => {
+            if (reviews[phone.id]) {
+                phone.reviews = reviews[phone.id];
+            }
+        });
+    }
 }
 
 // ---------------------------------------------
@@ -208,6 +365,10 @@ fetch('http://localhost:3000/phones')
     .then(data => {
         allPhones = data;
         console.log(`Loaded ${allPhones.length} phones from local server`);
+        
+        // Load saved reviews from localStorage
+        loadReviewsFromLocalStorage();
+        
         renderPhones(allPhones);
     })
     .catch(error => {
