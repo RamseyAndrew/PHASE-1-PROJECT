@@ -65,7 +65,7 @@ function createPhoneCard(phone) {
             <h3 class="phone-name">${phone.name}</h3>
             <div class="phone-brand">${phone.brand}</div>
             <div class="phone-rating">⭐ ${phone.rating}/5</div>
-            <div class="phone-price">$${phone.price.toLocaleString()}</div>
+            
             <div class="phone-specs">
                 <span class="spec">📱 ${phone.screen}</span>
                 <span class="spec">💾 ${phone.storage}</span>
@@ -124,7 +124,6 @@ function renderPhones(phones) {
  */
 function showPhoneDetails(phone) {
     const details = document.getElementById('details');
-    // Modal HTML structure with all phone details (no stock info)
     details.innerHTML = `
         <div class="details-modal">
             <div class="details-content">
@@ -179,8 +178,7 @@ function showPhoneDetails(phone) {
             </div>
         </div>
     `;
-    
-    details.style.display = 'block'; // Show the modal
+    details.style.display = 'block';
 }
 
 // ---------------------------------------------
