@@ -98,8 +98,7 @@ header {
     transform: scale(1.05);
 }
 
-.dark-mode-btn .sun {
-    display: none;
+
 }
 
 [data-theme="dark"] .dark-mode-btn .moon {
