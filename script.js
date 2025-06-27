@@ -2,10 +2,7 @@
 let allPhones = []; // Store all phones globally
 
 // Dark Mode Functionality
-function initDarkMode() {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const html = document.documentElement;
-    
+
     // Check for saved theme preference or default to light mode
     const savedTheme = localStorage.getItem('theme') || 'light';
     html.setAttribute('data-theme', savedTheme);
