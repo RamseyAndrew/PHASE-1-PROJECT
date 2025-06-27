@@ -21,6 +21,10 @@
     --error-bg: #fff3cd;
     --error-text: #856404;
     --error-border: #ffeaa7;
+    --review-bg: #f8f9fa;
+    --review-border: #dee2e6;
+    --review-success: #d4edda;
+    --review-success-text: #155724;
 }
 
 /* Dark mode variables */
@@ -46,6 +50,10 @@
     --error-bg: #3d2c1a;
     --error-text: #ffd54f;
     --error-border: #665c3a;
+    --review-bg: #2a2a2a;
+    --review-border: #444444;
+    --review-success: #1e4d2b;
+    --review-success-text: #66bb6a;
 }
 
 body {
@@ -438,5 +446,187 @@ footer {
     
     .specs-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Review Section Styles */
+.review-section {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--review-bg);
+    border-radius: 15px;
+    border: 1px solid var(--review-border);
+    transition: all 0.3s ease;
+}
+
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.reviews-header h4 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.1em;
+}
+
+.add-review-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.add-review-btn:hover {
+    background: var(--accent-color);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.review-form {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--bg-card);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.review-form textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.3s ease;
+}
+
+.review-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.2);
+}
+
+.review-form-controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.review-form-controls button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.review-form-controls button:first-child {
+    background: var(--accent-color);
+    color: white;
+}
+
+.review-form-controls button:first-child:hover {
+    background: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.cancel-btn {
+    background: var(--text-muted) !important;
+    color: white !important;
+}
+
+.cancel-btn:hover {
+    background: var(--text-secondary) !important;
+    transform: scale(1.05);
+}
+
+.reviews-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.no-reviews {
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.review-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.review-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-color);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9em;
+}
+
+.reviewer-name {
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.review-date {
+    color: var(--text-muted);
+    font-size: 0.8em;
+}
+
+.review-text {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+/* Update phone card height to accommodate reviews */
+.phone-card {
+    min-height: 600px;
+}
+
+/* Responsive adjustments for reviews */
+@media (max-width: 700px) {
+    .reviews-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+    
+    .review-form-controls {
+        justify-content: center;
+    }
+    
+    .review-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .phone-card {
+        min-height: 650px;
     }
 }
