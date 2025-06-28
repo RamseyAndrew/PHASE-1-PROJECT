@@ -199,7 +199,7 @@ function submitReview(phoneId) {
     const reviewsList = document.getElementById(`reviewsList-${phoneId}`);
     reviewsList.innerHTML = renderReviews(phone.reviews);
     
-    // Update the reviews count in header
+    // Update the reviews count in header - correct DOM navigation
     const reviewsHeader = reviewsList.previousElementSibling.previousElementSibling;
     const countElement = reviewsHeader.querySelector('h4');
     countElement.textContent = `Reviews (${phone.reviews.length})`;
