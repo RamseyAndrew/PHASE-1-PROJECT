@@ -1,10 +1,8 @@
-// Enhanced Phone Store Script - Local Database
-// This script handles fetching, displaying, searching, and viewing details for phones from a local JSON server.
-// It also manages dark mode and UI interactivity for a single-page application experience.
-// This version is for a review site (no stock or buying logic).
+// script.js - Main JavaScript for Phone Store
+// This script handles all interactivity for the Phone Store web app.
+// Every variable, function, and event is commented for beginners, with cross-references to index.html and styles.css.
 
-// Declare a global variable to store all phone objects fetched from the server
-let allPhones = []; // Store all phones globally for filtering and rendering
+let allPhones = []; // Store all phones globally for filtering and rendering (see renderPhones)
 
 // ----------------------
 // Dark Mode Functionality
@@ -12,16 +10,16 @@ let allPhones = []; // Store all phones globally for filtering and rendering
 /**
  * Initializes dark mode toggle functionality.
  * - Reads saved theme from localStorage or defaults to light mode.
- * - Sets the data-theme attribute on the <html> element.
- * - Adds a click event listener to the toggle button to switch themes.
+ * - Sets the data-theme attribute on the <html> element (see styles.css for dark mode styles).
+ * - Adds a click event listener to the toggle button (id="darkModeToggle" in index.html) to switch themes.
  */
 function initDarkMode() { // Define a function named initDarkMode
-    const darkModeToggle = document.getElementById('darkModeToggle'); // Get the button with id 'darkModeToggle' from the HTML
+    const darkModeToggle = document.getElementById('darkModeToggle'); // Get the button with id 'darkModeToggle' from index.html
     const html = document.documentElement; // Get the <html> element (the root of the document)
     
     // Check for saved theme preference or default to light mode
     const savedTheme = localStorage.getItem('theme') || 'light'; // Try to get the saved theme from localStorage, or use 'light' if not found
-    html.setAttribute('data-theme', savedTheme); // Set the 'data-theme' attribute on the <html> element to the saved theme
+    html.setAttribute('data-theme', savedTheme); // Set the 'data-theme' attribute on the <html> element (see styles.css [data-theme="dark"])
     
     // Toggle dark mode on button click
     darkModeToggle.addEventListener('click', () => { // Add a click event listener to the toggle button
@@ -52,10 +50,14 @@ document.addEventListener('DOMContentLoaded', initDarkMode); // When the HTML is
  * Adds click and hover event listeners for interactivity.
  * @param {Object} phone - The phone object to display
  * @returns {HTMLElement} - The card element
+ *
+ * Cross-references:
+ * - .phone-card, .phone-image, .phone-info, .phone-name, .phone-brand, .phone-rating, .phone-specs in styles.css
+ * - #results in index.html (where cards are rendered)
  */
 function createPhoneCard(phone) { // Define a function that takes a phone object as a parameter
     const card = document.createElement('div'); // Create a new <div> element for the card
-    card.className = 'phone-card'; // Set the class of the div to 'phone-card' for styling
+    card.className = 'phone-card'; // Set the class of the div to 'phone-card' for styling (see styles.css)
     
     // Card HTML structure with phone summary
     card.innerHTML = `
@@ -98,16 +100,16 @@ function createPhoneCard(phone) { // Define a function that takes a phone object
 // Function to render all phones to the page
 // ---------------------------------------------
 /**
- * Renders an array of phone objects as cards in the #results container.
+ * Renders an array of phone objects as cards in the #results container (see index.html and styles.css).
  * @param {Array} phones - Array of phone objects to display
  */
 function renderPhones(phones) { // Define a function that takes an array of phones
-    const results = document.getElementById('results'); // Get the element with id 'results'
+    const results = document.getElementById('results'); // Get the element with id 'results' (see index.html)
     results.innerHTML = ''; // Clear previous results by setting innerHTML to an empty string
     
     // Show message if no phones match the filter/search
     if (phones.length === 0) { // If the phones array is empty
-        results.innerHTML = '<div class="no-results">No phones found matching your search.</div>'; // Show a message
+        results.innerHTML = '<div class="no-results">No phones found matching your search.</div>'; // Show a message (styled in styles.css .no-results)
         return; // Exit the function
     }
     
@@ -123,9 +125,13 @@ function renderPhones(phones) { // Define a function that takes an array of phon
 /**
  * Displays a modal with detailed information about a phone.
  * @param {Object} phone - The phone object to show details for
+ *
+ * Cross-references:
+ * - #details in index.html (modal container)
+ * - .details-modal, .details-content, .close-btn, .details-header, .details-title, .brand-year, .rating, .details-body, .price-section, .price, .specs-grid, .spec-item, .spec-label, .spec-value, .description in styles.css
  */
 function showPhoneDetails(phone) { // Define a function that takes a phone object
-    const details = document.getElementById('details'); // Get the element with id 'details'
+    const details = document.getElementById('details'); // Get the element with id 'details' (see index.html)
     details.innerHTML = `
         <div class="details-modal">
             <div class="details-content">
@@ -180,7 +186,7 @@ function showPhoneDetails(phone) { // Define a function that takes a phone objec
             </div>
         </div>
     `; // Use template literals to insert phone properties into the modal HTML
-    details.style.display = 'block'; // Show the details modal by setting display to 'block'
+    details.style.display = 'block'; // Show the details modal by setting display to 'block' (see styles.css #details)
 } // End of showPhoneDetails function
 
 // ---------------------------------------------
@@ -188,6 +194,10 @@ function showPhoneDetails(phone) { // Define a function that takes a phone objec
 // ---------------------------------------------
 /**
  * Hides the phone details modal.
+ *
+ * Cross-references:
+ * - #details in index.html
+ * - .close-btn in styles.css
  */
 function closeDetails() { // Define a function to close the details modal
     const details = document.getElementById('details'); // Get the element with id 'details'
@@ -200,6 +210,10 @@ function closeDetails() { // Define a function to close the details modal
 /**
  * Fetches phone data from the local JSON server and renders the phone cards.
  * Handles errors if the server is not running.
+ *
+ * Cross-references:
+ * - #results in index.html (where cards are rendered)
+ * - .error-message in styles.css (for error display)
  */
 fetch('http://localhost:3000/phones') // Use fetch to get data from the local server
     .then(response => { // When the server responds
@@ -222,7 +236,7 @@ fetch('http://localhost:3000/phones') // Use fetch to get data from the local se
                 <p>Please start the JSON server to view phones.</p>
                 <p>Run: <code>npm start</code> or use your start-server.bat file</p>
             </div>
-        `; // Show an error message on the page
+        `; // Show an error message on the page (styled in styles.css .error-message)
     });
 
 // ---------------------------------------------
@@ -230,8 +244,10 @@ fetch('http://localhost:3000/phones') // Use fetch to get data from the local se
 // ---------------------------------------------
 /**
  * Filters the phone list as the user types in the search bar.
- * Listens for 'input' events on the search input field.
- * (This is a distinct event type for requirements)
+ * Listens for 'input' events on the search input field (id="searchInput" in index.html).
+ *
+ * Cross-references:
+ * - #searchInput in index.html
  */
 document.getElementById('searchInput').addEventListener('input', function() { // Get the search input and listen for input events
     const searchValue = this.value.toLowerCase(); // Get the value typed by the user and convert to lowercase
@@ -251,6 +267,9 @@ document.getElementById('searchInput').addEventListener('input', function() { //
 /**
  * Closes the details modal if the user clicks outside the modal content.
  * Listens for 'click' events on the document.
+ *
+ * Cross-references:
+ * - #details in index.html
  */
 document.addEventListener('click', function(event) { // Listen for clicks anywhere on the page
     const details = document.getElementById('details'); // Get the details modal
@@ -260,4 +279,4 @@ document.addEventListener('click', function(event) { // Listen for clicks anywhe
     }
 });
 
-// End of script.js - All code is now thoroughly commented for beginners
+// End of script.js - All code is now thoroughly commented and cross-referenced for beginners
