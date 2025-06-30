@@ -1,29 +1,36 @@
 <!DOCTYPE html>
+<!--
+  This is the main HTML file for the Phone Store web app.
+  It links to styles.css for styling and script.js for interactivity.
+  Each element, class, and ID is referenced in the comments, with cross-references to CSS and JS where relevant.
+-->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phone Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8"> <!-- Sets the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures proper scaling on mobile devices -->
+    <title>Phone Store</title> <!-- The title shown in the browser tab -->
+    <link rel="stylesheet" href="styles.css"> <!-- Links to the main CSS file (see styles.css for styling of all elements/classes) -->
 </head>
 <body>
+    <!-- Header section: Contains the site title and controls -->
     <header>
-        <div class="header-content">
-            <h1>Phone Store</h1>
-            <div class="header-controls">
-                <input type="text" id="searchInput" placeholder="Search Phones">
-                <button id="darkModeToggle" class="dark-mode-btn">
-                    <span class="moon">🌙</span>
-                    <span class="sun">☀️</span>
+        <div class="header-content"> <!-- Styled in styles.css (.header-content) -->
+            <h1>Phone Store</h1> <!-- Main heading, styled in styles.css (header h1) -->
+            <div class="header-controls"> <!-- Container for search and dark mode, styled in styles.css (.header-controls) -->
+                <input type="text" id="searchInput" placeholder="Search Phones"> <!-- Search bar: styled in styles.css (input), used in script.js for live search -->
+                <button id="darkModeToggle" class="dark-mode-btn"> <!-- Dark mode toggle: styled in styles.css (.dark-mode-btn), used in script.js (initDarkMode) -->
+                    <span class="moon">🌙</span> <!-- Moon icon: shown in light mode, styled in styles.css (.moon) -->
+                    <span class="sun">☀️</span> <!-- Sun icon: shown in dark mode, styled in styles.css (.sun) -->
                 </button>
             </div>
         </div>
     </header>
-    <main id="results"></main>
-    <div id="details"></div>
+    <!-- Main content area: where phone cards are rendered by script.js -->
+    <main id="results"></main> <!-- This is filled dynamically by script.js (renderPhones), styled in styles.css (#results) -->
+    <div id="details"></div> <!-- Modal for phone details, filled by script.js (showPhoneDetails), styled in styles.css (#details, .details-modal, etc.) -->
     <footer>
-        <p>Copyright &copy; 2025 Phone Store</p>
+        <p>Copyright &copy; 2025 Phone Store</p> <!-- Footer, styled in styles.css (footer) -->
     </footer>
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Links to the main JavaScript file (see script.js for all interactivity) -->
 </body>
 </html>
