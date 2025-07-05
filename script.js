@@ -2,10 +2,13 @@
 // This script handles all interactivity for the Phone Store web app.
 // Every variable, function, and event is commented for beginners, with cross-references to index.html and styles.css.
 
+// ----------------------
+// Global Variables
+// ----------------------
 let allPhones = []; // Store all phones globally for filtering and rendering (see renderPhones)
 
 // ----------------------
-// Dark Mode Functionality
+// Utility Functions
 // ----------------------
 /**
  * Initializes dark mode toggle functionality.
@@ -13,7 +16,7 @@ let allPhones = []; // Store all phones globally for filtering and rendering (se
  * - Sets the data-theme attribute on the <html> element (see styles.css for dark mode styles).
  * - Adds a click event listener to the toggle button (id="darkModeToggle" in index.html) to switch themes.
  */
-function initDarkMode() { // Define a function named initDarkMode
+const initDarkMode = () => {
     const darkModeToggle = document.getElementById('darkModeToggle'); // Get the button with id 'darkModeToggle' from index.html
     const html = document.documentElement; // Get the <html> element (the root of the document)
     
@@ -35,16 +38,23 @@ function initDarkMode() { // Define a function named initDarkMode
             html.style.transition = ''; // Remove the transition style
         }, 300); // 300 milliseconds = 0.3 seconds
     }); // End of click event listener
-} // End of initDarkMode function
+};
 
-// Initialize dark mode when DOM is loaded
-// Ensures theme is set before any UI is shown
-// (DOMContentLoaded is a distinct event listener)
-document.addEventListener('DOMContentLoaded', initDarkMode); // When the HTML is fully loaded, call initDarkMode
+/**
+ * Hides the phone details modal.
+ *
+ * Cross-references:
+ * - #details in index.html
+ * - .close-btn in styles.css
+ */
+const closeDetails = () => {
+    const details = document.getElementById('details'); // Get the element with id 'details'
+    details.style.display = 'none'; // Hide the modal by setting display to 'none'
+};
 
-// ---------------------------------------------
-// Function to create a phone card element
-// ---------------------------------------------
+// ----------------------
+// DOM Manipulation Functions
+// ----------------------
 /**
  * Creates a DOM element representing a phone card with summary info.
  * Adds click and hover event listeners for interactivity.
@@ -55,7 +65,7 @@ document.addEventListener('DOMContentLoaded', initDarkMode); // When the HTML is
  * - .phone-card, .phone-image, .phone-info, .phone-name, .phone-brand, .phone-rating, .phone-specs in styles.css
  * - #results in index.html (where cards are rendered)
  */
-function createPhoneCard(phone) { // Define a function that takes a phone object as a parameter
+const createPhoneCard = (phone) => {
     const card = document.createElement('div'); // Create a new <div> element for the card
     card.className = 'phone-card'; // Set the class of the div to 'phone-card' for styling (see styles.css)
     
@@ -94,16 +104,13 @@ function createPhoneCard(phone) { // Define a function that takes a phone object
     });
 
     return card; // Return the card element
-} // End of createPhoneCard function
+};
 
-// ---------------------------------------------
-// Function to render all phones to the page
-// ---------------------------------------------
 /**
  * Renders an array of phone objects as cards in the #results container (see index.html and styles.css).
  * @param {Array} phones - Array of phone objects to display
  */
-function renderPhones(phones) { // Define a function that takes an array of phones
+const renderPhones = (phones) => {
     const results = document.getElementById('results'); // Get the element with id 'results' (see index.html)
     results.innerHTML = ''; // Clear previous results by setting innerHTML to an empty string
     
@@ -117,11 +124,8 @@ function renderPhones(phones) { // Define a function that takes an array of phon
     phones.forEach(phone => { // For each phone in the array
         results.appendChild(createPhoneCard(phone)); // Create a card and add it to the results
     });
-} // End of renderPhones function
+};
 
-// ---------------------------------------------
-// Function to show detailed phone information
-// ---------------------------------------------
 /**
  * Displays a modal with detailed information about a phone.
  * @param {Object} phone - The phone object to show details for
@@ -130,7 +134,7 @@ function renderPhones(phones) { // Define a function that takes an array of phon
  * - #details in index.html (modal container)
  * - .details-modal, .details-content, .close-btn, .details-header, .details-title, .brand-year, .rating, .details-body, .price-section, .price, .specs-grid, .spec-item, .spec-label, .spec-value, .description in styles.css
  */
-function showPhoneDetails(phone) { // Define a function that takes a phone object
+const showPhoneDetails = (phone) => {
     const details = document.getElementById('details'); // Get the element with id 'details' (see index.html)
     details.innerHTML = `
         <div class="details-modal">
@@ -187,26 +191,11 @@ function showPhoneDetails(phone) { // Define a function that takes a phone objec
         </div>
     `; // Use template literals to insert phone properties into the modal HTML
     details.style.display = 'block'; // Show the details modal by setting display to 'block' (see styles.css #details)
-} // End of showPhoneDetails function
+};
 
-// ---------------------------------------------
-// Function to close details modal
-// ---------------------------------------------
-/**
- * Hides the phone details modal.
- *
- * Cross-references:
- * - #details in index.html
- * - .close-btn in styles.css
- */
-function closeDetails() { // Define a function to close the details modal
-    const details = document.getElementById('details'); // Get the element with id 'details'
-    details.style.display = 'none'; // Hide the modal by setting display to 'none'
-} // End of closeDetails function
-
-// ---------------------------------------------
-// Fetch phones from local JSON server
-// ---------------------------------------------
+// ----------------------
+// Data Fetching
+// ----------------------
 /**
  * Fetches phone data from the local JSON server and renders the phone cards.
  * Handles errors if the server is not running.
@@ -239,9 +228,9 @@ fetch('http://localhost:3000/phones') // Use fetch to get data from the local se
         `; // Show an error message on the page (styled in styles.css .error-message)
     });
 
-// ---------------------------------------------
-// Enhanced search functionality
-// ---------------------------------------------
+// ----------------------
+// Event Listeners
+// ----------------------
 /**
  * Filters the phone list as the user types in the search bar.
  * Listens for 'input' events on the search input field (id="searchInput" in index.html).
@@ -271,12 +260,20 @@ document.getElementById('searchInput').addEventListener('input', function() { //
  * Cross-references:
  * - #details in index.html
  */
-document.addEventListener('click', function(event) { // Listen for clicks anywhere on the page
+document.addEventListener('click', (event) => { // Listen for clicks anywhere on the page
     const details = document.getElementById('details'); // Get the details modal
     // Only close if the click is directly on the overlay (not inside modal)
     if (event.target === details) { // If the clicked element is the modal overlay
         closeDetails(); // Close the modal
     }
 });
+
+// ----------------------
+// Initialization
+// ----------------------
+// Initialize dark mode when DOM is loaded
+// Ensures theme is set before any UI is shown
+// (DOMContentLoaded is a distinct event listener)
+document.addEventListener('DOMContentLoaded', initDarkMode); // When the HTML is fully loaded, call initDarkMode
 
 // End of script.js - All code is now thoroughly commented and cross-referenced for beginners
