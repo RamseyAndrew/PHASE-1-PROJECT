@@ -520,7 +520,7 @@ footer {
     }
     .specs-grid {
         grid-template-columns: 1fr;
-    }
+    }                            
 }
 
 /* End of styles.css - All styles are now thoroughly commented and cross-referenced with index.html and script.js */
