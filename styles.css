@@ -4,200 +4,184 @@
   Each class, ID, and selector is commented with its purpose and where it is used in index.html and script.js.
 */
 
-/* CSS Variables for theming (used throughout the file for easy color changes) */
-:root {
-    --bg-primary: #f5f5dc; /* Main background color (used for body, cards, etc.) */
-    --bg-secondary: #ffffff; /* Secondary background (used for hover, cards, etc.) */
-    --bg-card: #ffffff; /* Card background */
-    --text-primary: #333333; /* Main text color */
-    --text-secondary: #666666; /* Secondary text color */
-    --text-muted: #888888; /* Muted text (less important info) */
-    --border-color: #e0e0e0; /* Border color for cards, inputs, etc. */
-    --shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Default card shadow */
-    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15); /* Card shadow on hover */
-    --accent-color: #007bff; /* Accent color for buttons, highlights */
-    --price-color: #2e7d32; /* Price text color */
-    --rating-color: #e6b800; /* Star rating color */
-    --header-bg: #333333; /* Header background */
-    --header-text: #ffffff; /* Header text color */
-    --footer-bg: #333333; /* Footer background */
-    --footer-text: #ffffff; /* Footer text color */
-    --modal-bg: rgba(0, 0, 0, 0.5); /* Modal overlay background */
-    --modal-content-bg: #ffffff; /* Modal content background */
-    --error-bg: #fff3cd; /* Error message background */
-    --error-text: #856404; /* Error message text */
-    --error-border: #ffeaa7; /* Error message border */
-    --review-bg: #f8f9fa; /* (Not used in current HTML, for future reviews) */
-    --review-border: #dee2e6; /* (Not used in current HTML) */
-    --review-success: #d4edda; /* (Not used in current HTML) */
-    --review-success-text: #155724; /* (Not used in current HTML) */
-}
-
-/* Dark mode variables (applied when [data-theme="dark"] is set on <html> by script.js) */
-[data-theme="dark"] {
-    --bg-primary: #1a1a1a;
-    --bg-secondary: #2d2d2d;
-    --bg-card: #333333;
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
-    --text-muted: #999999;
-    --border-color: #444444;
-    --shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
-    --accent-color: #4dabf7;
-    --price-color: #66bb6a;
-    --rating-color: #ffd54f;
-    --header-bg: #1a1a1a;
-    --header-text: #ffffff;
-    --footer-bg: #1a1a1a;
-    --footer-text: #ffffff;
-    --modal-bg: rgba(0, 0, 0, 0.8);
-    --modal-content-bg: #2d2d2d;
-    --error-bg: #3d2c1a;
-    --error-text: #ffd54f;
-    --error-border: #665c3a;
-    --review-bg: #2a2a2a;
-    --review-border: #444444;
-    --review-success: #1e4d2b;
-    --review-success-text: #66bb6a;
-}
-
 /* Body styles (applies to <body> in index.html) */
 body {
-    font-family: Arial, Helvetica, sans-serif; /* Sets the font for the whole page */
-    background: var(--bg-primary); /* Uses the main background color */
-    margin: auto; /* Centers the body horizontally */
-    padding: 0%; /* Removes default padding */
-    text-align: center; /* Centers text by default */
-    color: var(--text-primary); /* Sets main text color */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transitions for dark mode */
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f5dc;
+    margin: auto;
+    padding: 0%;
+    text-align: center;
+    color: #333333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+[data-theme="dark"] body {
+    background: #1a1a1a;
+    color: #ffffff;
 }
 
 /* Header styles (applies to <header> in index.html) */
 header {
-    background: var(--header-bg); /* Uses header background color */
-    color: var(--header-text); /* Header text color */
-    padding: 1em; /* Adds space inside header */
+    background: #333333;
+    color: #ffffff;
+    padding: 1em;
     transition: background-color 0.3s ease;
+}
+[data-theme="dark"] header {
+    background: #1a1a1a;
+    color: #ffffff;
 }
 
 /* Header content container (class="header-content" in index.html) */
 .header-content {
-    display: flex; /* Uses flexbox for layout */
-    justify-content: space-between; /* Space between title and controls */
-    align-items: center; /* Vertically center items */
-    max-width: 1200px; /* Maximum width for large screens */
-    margin: 0 auto; /* Center horizontally */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* Header controls (class="header-controls" in index.html) */
 .header-controls {
-    display: flex; /* Flexbox for layout */
-    align-items: center; /* Vertically center controls */
-    gap: 1rem; /* Space between controls */
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 /* Dark mode toggle button (id="darkModeToggle", class="dark-mode-btn" in index.html) */
 .dark-mode-btn {
-    background: var(--bg-card); /* Button background */
-    border: 2px solid var(--border-color); /* Button border */
-    border-radius: 50px; /* Rounded button */
-    padding: 0.5rem 1rem; /* Button padding */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: all 0.3s ease; /* Smooth transitions */
-    display: flex; /* Flexbox for icon layout */
-    align-items: center; /* Center icons vertically */
-    gap: 0.5rem; /* Space between icons */
-    color: var(--text-primary); /* Button text/icon color */
+    background: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #333333;
+}
+[data-theme="dark"] .dark-mode-btn {
+    background: #333333;
+    border: 2px solid #444444;
+    color: #ffffff;
 }
 
 .dark-mode-btn:hover {
-    background: var(--accent-color); /* Highlight on hover */
-    color: white; /* White text on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    background: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+[data-theme="dark"] .dark-mode-btn:hover {
+    background: #4dabf7;
+    color: white;
 }
 
 /* Sun and moon icons (inside dark mode button) */
 .dark-mode-btn .sun {
-    display: none; /* Hide sun icon by default (shown in dark mode) */
+    display: none;
 }
 [data-theme="dark"] .dark-mode-btn .moon {
-    display: none; /* Hide moon icon in dark mode */
+    display: none;
 }
 [data-theme="dark"] .dark-mode-btn .sun {
-    display: inline; /* Show sun icon in dark mode */
+    display: inline;
 }
 
 /* Input and button styles (applies to search bar and buttons in header) */
 input, button {
-    padding: 0.5em; /* Padding inside inputs/buttons */
-    margin: 0.5em; /* Margin around inputs/buttons */
-    border-radius: 5px; /* Rounded corners */
-    border: 1px solid var(--border-color); /* Border color */
-    background: var(--bg-secondary); /* Background color */
-    color: var(--text-primary); /* Text color */
-    transition: all 0.3s ease; /* Smooth transitions */
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    color: #333333;
+    transition: all 0.3s ease;
+}
+[data-theme="dark"] input, [data-theme="dark"] button {
+    border: 1px solid #444444;
+    background: #2d2d2d;
+    color: #ffffff;
 }
 
 input:focus {
-    outline: none; /* Remove default outline */
-    border-color: var(--accent-color); /* Highlight border on focus */
-    box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.2); /* Subtle glow on focus */
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.2);
+}
+[data-theme="dark"] input:focus {
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.2);
 }
 
 /* Main results area (id="results" in index.html, filled by script.js) */
 #results {
-    display: flex; /* Flexbox for card layout */
-    flex-wrap: wrap; /* Allow cards to wrap to next line */
-    justify-content: center; /* Center cards horizontally */
-    padding: 1em; /* Padding around cards */
-    background: var(--bg-primary); /* Background color */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1em;
+    background: #f5f5dc;
     transition: background-color 0.3s ease;
+}
+[data-theme="dark"] #results {
+    background: #1a1a1a;
 }
 
 /* Phone card styles (class="phone-card" in script.js, rendered inside #results) */
 .phone-card {
-    background: var(--bg-card); /* Card background */
-    margin: 1em; /* Space around each card */
-    padding: 1em; /* Space inside each card */
-    border-radius: 50px; /* Rounded card corners */
-    box-shadow: var(--shadow); /* Card shadow */
-    width: 300px; /* Card width */
-    text-align: left; /* Left-align text inside card */
-    display: flex; /* Flexbox for card content */
-    flex-direction: column; /* Stack content vertically */
-    align-items: center; /* Center content horizontally */
-    transition: all 0.3s ease; /* Smooth transitions */
-    min-height: 480px; /* Minimum card height */
-    cursor: pointer; /* Pointer cursor on hover */
-    border: 1px solid var(--border-color); /* Card border */
+    background: #ffffff;
+    margin: 1em;
+    padding: 1em;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    min-height: 480px;
+    cursor: pointer;
+    border: 1px solid #e0e0e0;
+}
+[data-theme="dark"] .phone-card {
+    background: #333333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #444444;
 }
 
 .phone-card:hover {
-    box-shadow: var(--shadow-hover); /* Stronger shadow on hover */
-    transform: translateY(-5px); /* Move card up on hover */
-    background: var(--bg-secondary); /* Change background on hover */
-    border-color: var(--accent-color); /* Highlight border on hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    background: #ffffff;
+    border-color: #007bff;
+}
+[data-theme="dark"] .phone-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    background: #2d2d2d;
+    border-color: #4dabf7;
 }
 
 /* Phone image container (class="phone-image" in script.js, inside .phone-card) */
 .phone-image {
-    width: 100%; /* Full width of card */
-    height: 220px; /* Fixed height for images */
-    display: flex; /* Center image */
+    width: 100%;
+    height: 220px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1em; /* Space below image */
-    overflow: hidden; /* Hide overflow */
-    border-radius: 50px; /* Rounded corners */
-    background: var(--bg-primary); /* Background color */
+    margin-bottom: 1em;
+    overflow: hidden;
+    border-radius: 50px;
+    background: #f5f5dc;
     transition: background-color 0.3s ease;
+}
+[data-theme="dark"] .phone-image {
+    background: #1a1a1a;
 }
 
 .phone-image img {
-    max-width: 100%; /* Image fits container */
+    max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* Keep aspect ratio */
+    object-fit: contain;
     display: block;
 }
 
@@ -213,26 +197,38 @@ input:focus {
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 0.2em;
-    color: var(--text-primary);
+    color: #333333;
+}
+[data-theme="dark"] .phone-name {
+    color: #ffffff;
 }
 
 .phone-brand {
     font-size: 1em;
-    color: var(--text-muted);
+    color: #888888;
     margin-bottom: 0.5em;
+}
+[data-theme="dark"] .phone-brand {
+    color: #999999;
 }
 
 .phone-rating {
     font-size: 1em;
-    color: var(--rating-color);
+    color: #e6b800;
     margin-bottom: 0.5em;
+}
+[data-theme="dark"] .phone-rating {
+    color: #ffd54f;
 }
 
 .phone-price {
     font-size: 1.1em;
     font-weight: bold;
-    color: var(--price-color);
+    color: #2e7d32;
     margin-bottom: 0.5em;
+}
+[data-theme="dark"] .phone-price {
+    color: #66bb6a;
 }
 
 .phone-specs {
@@ -241,20 +237,26 @@ input:focus {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5em;
-    color: var(--text-secondary);
+    color: #666666;
+}
+[data-theme="dark"] .phone-specs {
+    color: #cccccc;
 }
 
 /* Details Modal Styles (id="details" in index.html, filled by script.js) */
 #details {
-    display: none; /* Hidden by default, shown by script.js */
-    position: fixed; /* Overlay on top of page */
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--modal-bg); /* Semi-transparent background */
-    z-index: 1000; /* On top of other elements */
-    backdrop-filter: blur(5px); /* Blur background */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+[data-theme="dark"] #details {
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .details-modal {
@@ -266,23 +268,28 @@ input:focus {
 }
 
 .details-content {
-    background: var(--modal-content-bg);
+    background: #ffffff;
     border-radius: 20px;
     max-width: 800px;
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
-    box-shadow: var(--shadow-hover);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0e0e0;
     transition: all 0.3s ease;
+}
+[data-theme="dark"] .details-content {
+    background: #2d2d2d;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid #444444;
 }
 
 .close-btn {
     position: absolute;
     top: 15px;
     right: 20px;
-    background: var(--accent-color);
+    background: #007bff;
     color: white;
     border: none;
     border-radius: 50%;
@@ -293,18 +300,29 @@ input:focus {
     z-index: 1001;
     transition: all 0.3s ease;
 }
+[data-theme="dark"] .close-btn {
+    background: #4dabf7;
+    color: white;
+}
 
 .close-btn:hover {
-    background: var(--text-primary);
+    background: #333333;
     transform: scale(1.1);
+}
+[data-theme="dark"] .close-btn:hover {
+    background: #ffffff;
+    color: #4dabf7;
 }
 
 .details-header {
     display: flex;
     padding: 30px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #e0e0e0;
     gap: 30px;
     align-items: center;
+}
+[data-theme="dark"] .details-header {
+    border-bottom: 1px solid #444444;
 }
 
 .details-header img {
@@ -312,25 +330,37 @@ input:focus {
     height: 250px;
     object-fit: contain;
     border-radius: 15px;
-    background: var(--bg-primary);
+    background: #f5f5dc;
+}
+[data-theme="dark"] .details-header img {
+    background: #1a1a1a;
 }
 
 .details-title h2 {
-    color: var(--text-primary);
+    color: #333333;
     margin-bottom: 10px;
     font-size: 2em;
 }
+[data-theme="dark"] .details-title h2 {
+    color: #ffffff;
+}
 
 .brand-year {
-    color: var(--text-muted);
+    color: #888888;
     margin-bottom: 10px;
     font-size: 1.1em;
 }
+[data-theme="dark"] .brand-year {
+    color: #999999;
+}
 
 .rating {
-    color: var(--rating-color);
+    color: #e6b800;
     font-size: 1.2em;
     font-weight: bold;
+}
+[data-theme="dark"] .rating {
+    color: #ffd54f;
 }
 
 .details-body {
@@ -343,14 +373,20 @@ input:focus {
     align-items: center;
     margin-bottom: 30px;
     padding: 20px;
-    background: var(--bg-primary);
+    background: #f5f5dc;
     border-radius: 15px;
+}
+[data-theme="dark"] .price-section {
+    background: #1a1a1a;
 }
 
 .price {
     font-size: 2em;
     font-weight: bold;
-    color: var(--price-color);
+    color: #2e7d32;
+}
+[data-theme="dark"] .price {
+    color: #66bb6a;
 }
 
 .specs-grid {
@@ -364,37 +400,53 @@ input:focus {
     display: flex;
     justify-content: space-between;
     padding: 15px;
-    background: var(--bg-primary);
+    background: #f5f5dc;
     border-radius: 10px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #e0e0e0;
+}
+[data-theme="dark"] .spec-item {
+    background: #1a1a1a;
+    border: 1px solid #444444;
 }
 
 .spec-label {
-    color: var(--text-secondary);
+    color: #666666;
     font-weight: bold;
+}
+[data-theme="dark"] .spec-label {
+    color: #cccccc;
 }
 
 .spec-value {
-    color: var(--text-primary);
+    color: #333333;
+}
+[data-theme="dark"] .spec-value {
+    color: #ffffff;
 }
 
 .description h3 {
-    color: var(--text-primary);
+    color: #333333;
     margin-bottom: 15px;
     font-size: 1.3em;
 }
+[data-theme="dark"] .description h3 {
+    color: #ffffff;
+}
 
 .description p {
-    color: var(--text-secondary);
+    color: #666666;
     line-height: 1.6;
     font-size: 1.1em;
+}
+[data-theme="dark"] .description p {
+    color: #cccccc;
 }
 
 /* Error and No Results Messages (used in script.js for error handling and empty search) */
 .error-message, .no-results {
-    background: var(--error-bg);
-    color: var(--error-text);
-    border: 1px solid var(--error-border);
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
     border-radius: 10px;
     padding: 30px;
     margin: 20px;
@@ -403,6 +455,11 @@ input:focus {
     margin-left: auto;
     margin-right: auto;
 }
+[data-theme="dark"] .error-message, [data-theme="dark"] .no-results {
+    background: #3d2c1a;
+    color: #ffd54f;
+    border: 1px solid #665c3a;
+}
 
 .error-message h3, .no-results {
     margin-bottom: 15px;
@@ -410,57 +467,59 @@ input:focus {
 }
 
 .error-message code {
-    background: var(--bg-card);
+    background: #ffffff;
     padding: 5px 10px;
     border-radius: 5px;
     font-family: monospace;
-    color: var(--text-primary);
+    color: #333333;
+}
+[data-theme="dark"] .error-message code {
+    background: #333333;
+    color: #ffffff;
 }
 
 /* Footer styles (applies to <footer> in index.html) */
 footer {
-    background: var(--footer-bg);
-    color: var(--footer-text);
+    background: #333333;
+    color: #ffffff;
     padding: 1em;
     transition: background-color 0.3s ease;
+}
+[data-theme="dark"] footer {
+    background: #1a1a1a;
+    color: #ffffff;
 }
 
 /* Responsive styles for mobile devices */
 @media (max-width: 700px) {
     .header-content {
-        flex-direction: column; /* Stack header content vertically */
+        flex-direction: column;
         gap: 1rem;
     }
-    
     #results {
-        flex-direction: column; /* Stack cards vertically */
+        flex-direction: column;
         align-items: center;
     }
-    
     .phone-card {
-        width: 90vw; /* Make cards wider on small screens */
+        width: 90vw;
         min-width: 220px;
         max-width: 98vw;
     }
-    
     .details-header {
-        flex-direction: column; /* Stack modal header vertically */
+        flex-direction: column;
         text-align: center;
     }
-    
     .details-header img {
         width: 150px;
         height: 180px;
     }
-    
     .price-section {
         flex-direction: column;
         gap: 15px;
         text-align: center;
     }
-    
     .specs-grid {
-        grid-template-columns: 1fr; /* Single column for specs */
+        grid-template-columns: 1fr;
     }
 }
 
